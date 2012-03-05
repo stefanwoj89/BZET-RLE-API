@@ -1,0 +1,6 @@
+compile in linux:
+g++ ewah2.cpp -o ewah2
+./ewah2
+
+windows:
+drop file into an empty visual studio project and run with ctrl-F5
