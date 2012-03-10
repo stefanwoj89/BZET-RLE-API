@@ -1,6 +1,34 @@
-compile in linux:
-g++ ewah2.cpp -o ewah2
-./ewah2
+Out of the box testing:
+- Open RLE.py
+- Edit wordSize variable to be either 8,16,32,64
 
-windows:
-drop file into an empty visual studio project and run with ctrl-F5
+For linux:
+- Run compression test: python3 compressionTest.py
+For Windows:
+- change directory to <c:\python..>
+- Run compression test: python compressionTest.py
+
+If you want to create your own .so/.dll:
+
+LINUX:
+	- run makefile
+	- Open RLE.py
+	- Edit wordSize variable to be either 8, 16, 32, 64.
+	- Run compression test: 'python3 compressionTest.py'
+
+This will create the .so's for the various versions of ewah.
+
+WINDOWS:
+	- create dll via visual studio or command
+	- change directory to c:\... Microsoft Visual Studio/VC/bin
+	- command: cl /LD <directory of ewah.cpp>
+	- copy: copy ewah.dll <directory of RLE.py,compressionTest.py...>
+	- Open RLE.py
+	- Edit wordSize variable to be either 8, 16, 32, 64.
+	- change directory to your python3 directory <c:\python...>
+	- Run compression test: 'python compressionTest.py'
+
+This will create  .dlls  for the various versions of ewah in  <c:\... Microsoft Visual Studio/VC/bin> and copy it to the folder where the other 
+source files are.
+
+Note: For 64 bit window's .dll, it is better to use visual studio 2010. One must also use python3-64 bit.
