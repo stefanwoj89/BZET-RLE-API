@@ -1,3 +1,10 @@
+/*RLE-WAH  implementation based on "An Efficient Compression Scheme for Bitmap Indices"
+ developed by Kesheng Wu, Ekow J. Otoo and Arie Shoshani, http://escholarship.org/uc/item/2sp907t5#page-1
+Written for use with BZET-API by Robert Uzgalis
+Author: Stefan Wojciechowski
+
+This code can run 8,16,32,64 bit Word versions of WAH. Define ALIGN_8,ALIGN_16, ALIGN_32, ALIGN_64 respectively.
+It is endian agnostic*/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
