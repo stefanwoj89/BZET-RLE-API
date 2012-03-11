@@ -422,7 +422,7 @@ void addBit( bitVector * v, unsigned i, unsigned inv){
 			count+=align_bit_size-1*xrun.nWords;
 		else if(!xrun.isFill){
 			align_t temp = (*xrun.it);
-			for(int i = 0; i<align_bit_size; i++){
+			for(unsigned i = 0; i<align_bit_size; i++){
 				if( temp & FILL_ZERO)
 					count++;
 				temp = temp<<1;
@@ -446,7 +446,7 @@ void addBit( bitVector * v, unsigned i, unsigned inv){
 			}
 			else if(!xrun.isFill){
 				align_t temp = (*xrun.it);
-				for(int i = 0; i<align_bit_size; i++){ 
+				for(unsigned i = 0; i<align_bit_size; i++){ 
 					if( temp & COUNTMASK){
 						index += i;
 						return index;
@@ -472,7 +472,7 @@ void addBit( bitVector * v, unsigned i, unsigned inv){
 			}
 			else if(!xrun.isFill){
 				align_t temp = (*xrun.it);
-				for(int i = 0; i<(align_bit_size-1); i++){ 
+				for(unsigned i = 0; i<(align_bit_size-1); i++){ 
 					if( temp & COUNTMASK){
 						lastIndex = index;
 					}
@@ -532,7 +532,7 @@ void addBit( bitVector * v, unsigned i, unsigned inv){
 		}
 		else if(!xrun.isFill){
 			align_t temp = (*xrun.it);
-			for(int i = 0; i<(align_bit_size-1); i++){
+			for(unsigned i = 0; i<(align_bit_size-1); i++){
 				if(count == x)
 				{
 					if( temp & COUNTMASK)
