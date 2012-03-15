@@ -23,18 +23,18 @@ dlldir.replace( '\\', '\\\\' )
 # print( "DLL File:", dlldir+'\\_RLE.dll' )
 #cdll[find_msvcrt()]
 if wordSize == 8:
-    #lib = cdll.LoadLibrary(dlldir+'\\ewah8.dll')
-    lib = cdll.LoadLibrary('./ewah8.so') #uncomment this to run in linux
+    #lib = cdll.LoadLibrary(dlldir+'\\gwah8-1.dll')
+    lib = cdll.LoadLibrary('./gwah8-1.so') #uncomment this to run in linux
 
 elif wordSize == 16:
-    #lib = cdll.LoadLibrary(dlldir+'\\ewah16.dll')
-    lib = cdll.LoadLibrary('./ewah16.so') #uncomment this to run in linux
+    #lib = cdll.LoadLibrary(dlldir+'\\gwah16-2.dll')
+    lib = cdll.LoadLibrary('./gwah16-2.so') #uncomment this to run in linux
 elif wordSize == 32:
-    #lib = cdll.LoadLibrary(dlldir+'\\ewah32.dll')
-    lib = cdll.LoadLibrary('./ewah32.so') #uncomment this to run in linux
+    #lib = cdll.LoadLibrary(dlldir+'\\gwah32-4.dll')
+    lib = cdll.LoadLibrary('./gwah32-4.so') #uncomment this to run in linux
 elif wordSize == 64:
-    #lib = cdll.LoadLibrary(dlldir+'\\ewah64.dll')
-    lib = cdll.LoadLibrary('./ewah64.so') #uncomment this to run in linux
+    #lib = cdll.LoadLibrary(dlldir+'\\gwah64-8.dll')
+    lib = cdll.LoadLibrary('./gwah64-8.so') #uncomment this to run in linux
 
 PBZ = c_void_p
 ULL = c_uint

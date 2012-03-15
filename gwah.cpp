@@ -9,6 +9,7 @@ It is endian agnostic*/
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
+#define DLLEXPORT extern "C" __declspec(dllexport)
 void *__gxx_personality_v0;
 
 #define ALIGN_32
@@ -219,7 +220,7 @@ void generic_op(struct bitVector * x, struct bitVector *y, struct bitVector *z, 
 			z->active.value = oper(x->active.value, y->active.value);															//	z.active.value = x.active.value  y.active.value;
 			z->active.nbits = x->active.nbits;																					//	z.active.nbits = x.active.nbits;
 }
-struct bitVector * create(){
+DLLEXPORT struct bitVector * create(){
 	struct bitVector * bv;
 	INIT(bv, 10);
 	return bv;
@@ -233,22 +234,22 @@ generic_op(x,y,z,orOper);
 inline void xor_op(struct bitVector * x, struct bitVector *y, struct bitVector *z){
 generic_op(x,y,z,xorOper);
 }
- inline struct bitVector * and_op_wrapper(struct bitVector *x, struct bitVector *y){
+DLLEXPORT inline struct bitVector * and_op_wrapper(struct bitVector *x, struct bitVector *y){
 	bitVector *z = create();
 	and_op(x,y,z);
 	return z;
 }
- inline struct bitVector * or_op_wrapper(struct bitVector *x, struct bitVector *y){
+DLLEXPORT inline struct bitVector * or_op_wrapper(struct bitVector *x, struct bitVector *y){
 	bitVector *z = create();
 	or_op(x,y,z);
 	return z;
 }
- inline struct bitVector * xor_op_wrapper(struct bitVector *x, struct bitVector *y){
+DLLEXPORT inline struct bitVector * xor_op_wrapper(struct bitVector *x, struct bitVector *y){
 	bitVector *z = create();
 	xor_op(x,y,z);
 	return z;
 }
- unsigned nWords( struct bitVector * v){
+DLLEXPORT unsigned nWords( struct bitVector * v){
 	unsigned totalNumWords = 0;
 	struct run xrun; runInit(&xrun);						
 	xrun.it = v->vec.data; 																						
@@ -259,7 +260,7 @@ generic_op(x,y,z,xorOper);
 	}
 	return totalNumWords;
 }
- void invert(struct bitVector * x){
+DLLEXPORT void invert(struct bitVector * x){
 	struct bitVector * mask,* z;
 	INIT(mask,x->vec.allocSize); INIT(z,x->vec.allocSize); 
 	unsigned xNumWords = nWords(x);
@@ -270,7 +271,7 @@ generic_op(x,y,z,xorOper);
 	x->vec.data = z->vec.data;												// address the inverted bitset
 	free(z); FREE(mask);													// free the z data structure
 }
- struct bitVector * RLEnot(struct bitVector *x){
+DLLEXPORT struct bitVector * RLEnot(struct bitVector *x){
 	struct bitVector * mask,* z;
 	INIT(mask,x->vec.allocSize); INIT(z,x->vec.allocSize); 
 	unsigned xNumWords = nWords(x);
@@ -312,7 +313,7 @@ struct  bitVector * range (unsigned from, unsigned to, unsigned stride){
 	}
 	return v;
 }
- struct bitVector * range(unsigned from, unsigned to){
+DLLEXPORT struct bitVector * range(unsigned from, unsigned to){
 	struct bitVector *v;
 	INIT(v,10);
 	if(from>0)
@@ -340,7 +341,7 @@ void addBit(struct bitVector * v, unsigned i, unsigned inv){
 	v->active.value = 0; v->active.nbits = 0;
 
 }
- void align(struct bitVector *x, struct bitVector *y,unsigned inv){
+DLLEXPORT void align(struct bitVector *x, struct bitVector *y,unsigned inv){
 	int xNumWords = nWords(x);
 	int yNumWords = nWords(y);												// A counter to determine number of words to append at the end of bitset
 	align_t fillBit = 0;
@@ -350,7 +351,7 @@ void addBit(struct bitVector * v, unsigned i, unsigned inv){
 	if(xNumWords>yNumWords) appendFill(y,appendSize,fillBit);				// AppendFill words at the end
 	else if(yNumWords>xNumWords) appendFill(x,appendSize,fillBit);
 }
- void set(struct bitVector * x, unsigned i)
+DLLEXPORT void set(struct bitVector * x, unsigned i)
 {
 	struct bitVector * temp, * z;											// Initialization of temp (bitset with index i set) and z (the result of the or operation between x and temp)
 	INIT(temp,x->vec.allocSize);INIT(z,x->vec.allocSize);
@@ -370,7 +371,7 @@ void addBit(struct bitVector * v, unsigned i, unsigned inv){
 		free(temp);
 	}	
 }
- void unset(struct bitVector * x, unsigned i){
+DLLEXPORT void unset(struct bitVector * x, unsigned i){
 	struct bitVector * temp, * z;											// Initialization of temp (bitset with index i set) and z (the result of the or operation between x and temp)
 	INIT(temp,x->vec.allocSize);INIT(z,x->vec.allocSize);
 	addBit(temp,i,1);
@@ -389,7 +390,7 @@ void addBit(struct bitVector * v, unsigned i, unsigned inv){
 		free(temp);
 	}	
 }
- void flip(struct bitVector *x, unsigned i){
+DLLEXPORT void flip(struct bitVector *x, unsigned i){
 	struct bitVector * temp, * z;											// Initialization of temp (bitset with index i set) and z (the result of the or operation between x and temp)
 	INIT(temp,x->vec.allocSize);INIT(z,x->vec.allocSize);
 	addBit(temp, i, 0);
@@ -408,7 +409,7 @@ void addBit(struct bitVector * v, unsigned i, unsigned inv){
 		free(temp);
 	}	
 }
- unsigned count(struct bitVector *v){
+DLLEXPORT unsigned count(struct bitVector *v){
 	unsigned count = 0;
 	struct run xrun; runInit(&xrun);						
 	xrun.it = v->vec.data; 																						
@@ -429,7 +430,7 @@ void addBit(struct bitVector * v, unsigned i, unsigned inv){
 	}
 	return count;
 }
- unsigned first(struct bitVector *v){
+DLLEXPORT unsigned first(struct bitVector *v){
 		unsigned index = 0;
 		struct run xrun; runInit(&xrun);						
 		xrun.it = v->vec.data; 																						
@@ -455,7 +456,7 @@ void addBit(struct bitVector * v, unsigned i, unsigned inv){
 		}
 		return index;
 }
- unsigned last(struct bitVector *v){
+DLLEXPORT unsigned last(struct bitVector *v){
 		unsigned index = 0;
 		unsigned lastIndex = 0;
 		struct run xrun; runInit(&xrun);						
@@ -481,38 +482,38 @@ void addBit(struct bitVector * v, unsigned i, unsigned inv){
 		}
 		return lastIndex;
 }
- struct bitVector * setInt(unsigned i){
+DLLEXPORT struct bitVector * setInt(unsigned i){
 	bitVector *bv = create();
 	set(bv,i);
 	return bv;
 }
- struct bitVector * Buf2RLE( unsigned char* rlerow, const unsigned clen){
+DLLEXPORT struct bitVector * Buf2RLE( unsigned char* rlerow, const unsigned clen){
 	bitVector * v = create();
 	v->vec.size= clen;
 	memcpy(v->vec.data, rlerow, (size_t) clen );	
 	return v;
 }
- void RLE2Buf( unsigned char * set, unsigned char *rlerow, const unsigned clen )
+DLLEXPORT void RLE2Buf( unsigned char * set, unsigned char *rlerow, const unsigned clen )
 {	// This routine writes into a Python byte array
 	// the internal rle structure of the set.
 	bitVector  *v = (struct bitVector *) set;
 	memcpy( rlerow, v->vec.data, (size_t) clen );		
 	return;
 }
- unsigned RLEsize(struct bitVector* v){
+DLLEXPORT unsigned RLEsize(struct bitVector* v){
 	return v->vec.size * WORDBYTES;
 }
- void RLEfree(struct bitVector *v){
+DLLEXPORT void RLEfree(struct bitVector *v){
 	FREE(v);
 }
- void replace(struct bitVector* x,struct bitVector *y){
+DLLEXPORT void replace(struct bitVector* x,struct bitVector *y){
 
 		free(x->vec.data);
 		x->vec.data = y->vec.data;
 		x->vec.size = y->vec.size;
 		free(y);
 }
- int test(struct bitVector *v, unsigned x){
+DLLEXPORT int test(struct bitVector *v, unsigned x){
 	unsigned count = 0;
 	struct run xrun; runInit(&xrun);						
 	xrun.it = v->vec.data; 																						
@@ -548,7 +549,7 @@ void addBit(struct bitVector * v, unsigned i, unsigned inv){
 	return 0;
 
 }
- int eq(struct bitVector * x, struct bitVector *y){
+DLLEXPORT int eq(struct bitVector * x, struct bitVector *y){
 	struct run xrun,yrun; runInit(&xrun); runInit(&yrun);						
 	xrun.it = x->vec.data;
 	yrun.it = y->vec.data;
