@@ -89,7 +89,7 @@ void growIfNeeded(struct vector * v){
 //Input: 31 literal bits stored in active.value.
 //Output: vec extended by 31 bits.
 void appendLiteral(struct bitVector* bv) { 															//bitVector::appendLiteral() {
-	assert(bv->vec.size < bv->vec.allocSize);										
+	//assert(bv->vec.size < bv->vec.allocSize);										
 	if(EMPTY(bv->vec))																				//	IF (vec.empty())																								
 		PUSH(bv->vec,bv->active.value);																//		vec.push back(active.value); 
 	else if (bv->active.value == 0 )	{															//	ELSEIF (active.value == 0)

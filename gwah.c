@@ -98,7 +98,7 @@ void growIfNeeded( vector * v){
 
 
 void appendLiteral( bitVector* bv) { 															
-	assert(bv->vec.size < bv->vec.allocSize);										
+	//assert(bv->vec.size < bv->vec.allocSize);										
 	if(EMPTY(bv->vec))																																											
 		PUSH(bv->vec,bv->active.value);																
 	else if (bv->active.value == 0 )	{															
