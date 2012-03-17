@@ -141,7 +141,7 @@ void appendFill(struct bitVector* bv, unsigned long long n, align_t fillBit){			
 			}							
 			appendNewFills(bv,n,FILL_ONE);
 		}
-	}else if(EMPTY(bv->vec)){																		//	ELSEIF (vec.empty())
+	}else if(EMPTY(bv->vec) && n>1){																		//	ELSEIF (vec.empty())
 		if(fillBit == 0)																			//		IF (fillBit == 0)
 			appendNewFills(bv,n,FILL_ZERO);															//			vec.push back(0x80000000 + n); 
 		else																						//		ELSE
